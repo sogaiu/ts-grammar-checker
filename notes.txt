@@ -1,0 +1,5 @@
+* create README
+  * prerequisites
+    * janet / jpm
+    * at least one tree-sitter grammar
+  * sample invocations
