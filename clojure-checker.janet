@@ -1,6 +1,18 @@
 (import ./ts-grammar-checker)
 
-(ts-grammar-checker/check-dir
-  "clojure"
-  "/home/user/src/clojars-cljish"
-  [".clj" ".cljc" ".cljs"])
+(defn main
+  [& args]
+  (def n-args (length args))
+  # XXX: not really appropriate for general use
+  (var src-root "/home/user/src/clojars-cljish")
+  (var lang-name "clojure")
+  (var exts [".clj" ".cljc" ".cljs"])
+  #
+  (when (> n-args 1)
+    (set src-root (get args 1)))
+  (when (> n-args 2)
+    (set lang-name (get args 2)))
+  (when (> n-args 3)
+    (set exts (slice args 3)))
+  #
+  (ts-grammar-checker/check-dir src-root lang-name exts))

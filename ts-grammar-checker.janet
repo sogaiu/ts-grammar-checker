@@ -21,7 +21,7 @@
   )
 
 (defn check-dir
-  [lang-name src-root exts]
+  [src-root lang-name exts]
   (def p (tree-sitter/init lang-name))
   (def subdirs @[])
   (defn helper
@@ -48,25 +48,25 @@
   (helper src-root subdirs))
 
 (comment
-  
-  (check-dir
-    "clojure" "/home/user/src/clojure" [".clj" ".cljc" ".cljs"])
 
   (check-dir
-    "janet_simple" "/home/user/src/janet" [".janet"])
+    "/home/user/src/clojure" "clojure" [".clj" ".cljc" ".cljs"])
+
+  (check-dir
+    "/home/user/src/janet" "janet_simple" [".janet"])
 
 )
 
 (defn main
   [& args]
   (unless (> (length args) 3)
-    (eprint "Requires args for: lang-name, dir-path, extensions")
+    (eprint "Requires args for: dir-path, lang-name, extensions")
     (os/exit 1))
-  (when-let [lang-name (get args 1)
-             dir-path (get args 2)
+  (when-let [dir-path (get args 1)
              stat (os/stat dir-path)
+             lang-name (get args 2)
              exts (slice args 3)]
     (unless (= :directory (stat :mode))
       (eprintf "dir-path was not a directory: %s" dir-path)
       (os/exit 1))
-    (check-dir lang-name dir-path exts)))
+    (check-dir dir-path lang-name exts)))
