@@ -1,0 +1,11 @@
+Example of Setup
+
+cd ~/src
+git clone --recursive https://gitlab.com/sogaiu/ts-grammar-checker
+cd ts-grammar-checker
+jpm deps
+
+Example of Use
+
+cd ~/src/ts-grammar-checker
+janet clojure-checker.janet ../clojars-cljish # path to dir tree of clojure files
