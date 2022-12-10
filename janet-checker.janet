@@ -3,8 +3,9 @@
 (defn main
   [& args]
   (def n-args (length args))
-  # XXX: not really appropriate for general use
-  (var src-root   "/home/user/src/forcett/repos")
+  (var src-root (get args 1))
+  (assert (= :directory (os/stat src-root :mode))
+          (string "not a directory: " src-root))
   (var lang-name "janet_simple")
   (var exts [".janet"])
   #
