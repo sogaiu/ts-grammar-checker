@@ -55,7 +55,7 @@
   (check-dir
     "/home/user/src/janet" "janet_simple" [".janet"])
 
-)
+  )
 
 (defn main
   [& args]
