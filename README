@@ -7,5 +7,6 @@ jpm deps
 
 Example of Use
 
+# assuming tree-sitter-clojure's shared object is "installed"
 cd ~/src/ts-grammar-checker
 janet clojure-checker.janet ../clojars-cljish # path to dir tree of clojure files
