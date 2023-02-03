@@ -23,6 +23,9 @@
 (defn check-dir
   [src-root lang-name exts]
   (def p (tree-sitter/init lang-name))
+  (unless p
+    (eprintf "") # aesthetics
+    (errorf "Parser init failed"))
   (def subdirs @[])
   (defn helper
     [src-root subdirs]
