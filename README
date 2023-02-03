@@ -1,7 +1,7 @@
 Example of Setup
 
 cd ~/src
-git clone --recursive https://gitlab.com/sogaiu/ts-grammar-checker
+git clone --recursive https://github.com/sogaiu/ts-grammar-checker
 cd ts-grammar-checker
 jpm deps
 
