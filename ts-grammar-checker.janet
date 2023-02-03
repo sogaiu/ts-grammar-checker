@@ -21,8 +21,11 @@
   )
 
 (defn check-dir
-  [src-root lang-name exts]
-  (def p (tree-sitter/init lang-name))
+  [src-root lang-name exts &opt so-path]
+  (def p
+    (if so-path
+      (tree-sitter/init lang-name so-path)
+      (tree-sitter/init lang-name)))
   (unless p
     (eprintf "") # aesthetics
     (errorf "Parser init failed"))
@@ -63,13 +66,19 @@
 (defn main
   [& args]
   (unless (> (length args) 3)
-    (eprint "Requires args for: dir-path, lang-name, extensions")
+    (eprint "Requires at least: dir-path, lang-name, extensions")
     (os/exit 1))
   (when-let [dir-path (get args 1)
              stat (os/stat dir-path)
              lang-name (get args 2)
-             exts (slice args 3)]
+             rest (array ;(slice args 3))
+             last-item (last rest)]
     (unless (= :directory (stat :mode))
       (eprintf "dir-path was not a directory: %s" dir-path)
       (os/exit 1))
-    (check-dir dir-path lang-name exts)))
+    # if last-item has a "." in it, assume it's a path -- hacky?
+    (if (string/find "." last-item)
+      # found a path
+      (check-dir dir-path lang-name (array/remove rest -2) last-item)
+      # no path, so rest only has extensions
+      (check-dir dir-path lang-name rest))))
