@@ -3,6 +3,7 @@
 (defn main
   [& args]
   (def n-args (length args))
+  (assert (> n-args 1) "Directory path needed")
   (var src-root (get args 1))
   (assert (= :directory (os/stat src-root :mode))
           (string "not a directory: " src-root))
